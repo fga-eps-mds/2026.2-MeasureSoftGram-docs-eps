@@ -14,25 +14,43 @@ nesta pagina enquanto o volume for pequeno.
 
 | Sprint | Periodo | Objetivo | Status |
 | --- | --- | --- | --- |
-| [Sprint 1](#sprint-1) | | Conhecer o projeto e alinhar expectativas com o PO | Em andamento |
+| [Sprint 1](#sprint-1---1708-a-0409) | 17/08 a 04/09/2026 | Conhecer o projeto e diagnosticar o estado do ecossistema | Em andamento |
 
 ---
 
-## Sprint 1
+## Sprint 1 - 17/08 a 04/09
 
 ### Objetivo
 
-Primeiro contato da equipe com o projeto e com o Product Owner, para entender o
-produto e o que se espera da equipe no semestre.
+Primeiro contato da equipe com o projeto e com o Product Owner, e levantamento do
+estado tecnico em que o MeasureSoftGram chegou a este semestre.
 
 ### O que foi feito
 
-- **Reuniao com o Product Owner**, em que ele apresentou a **metodologia
-  matematica do projeto** - a base de calculo do modelo de qualidade do
-  MeasureSoftGram. O registro completo esta em
-  [Reunioes](/docs/reunioes#reuniao-1---apresentacao-da-metodologia-matematica).
-- Organizacao dos acessos e das ferramentas da equipe (Zenhub, Figma, Notion,
-  Discord e Telegram) - veja [Links e acessos](/docs/equipe/links).
+**Diagnostico tecnico dos repositorios.** A equipe fez um pente-fino nos **sete
+repositorios** do projeto, avaliando arquitetura, integridade do modelo de
+qualidade, seguranca, cobertura de testes e integracao continua. O resultado
+esta em [Diagnostico do ecossistema](/docs/diagnostico) e foi convertido em um
+[backlog tecnico de 41 itens](/docs/diagnostico/backlog-tecnico), cada um
+redigido para virar issue.
+
+Os achados mais relevantes:
+
+- O **motor de calculo publicado nao corresponde ao codigo versionado** - a nota
+  de qualidade do projeto nao e reproduzivel hoje.
+- **Tres versoes do Core** em circulacao simultanea.
+- **Tres itens quebrados agora**, incluindo um endpoint publico que expoe o
+  e-mail de todos os usuarios.
+- **Nenhum portao de qualidade e bloqueante** em nenhum repositorio.
+
+**Reuniao com o Product Owner**, em que ele apresentou a **metodologia matematica
+do projeto** - a base de calculo do modelo de qualidade. O registro esta em
+[Reunioes](/docs/reunioes#reuniao-1---apresentacao-da-metodologia-matematica).
+
+**Organizacao da equipe:**
+
+- Definicao dos acessos e ferramentas (Zenhub, Figma, Notion, Discord e
+  Telegram) - veja [Links e acessos](/docs/equipe/links).
 - Organizacao dos forks dos repositorios, conforme o
   [guia da equipe](https://hackmd.io/@luciano-freitas-melo/fork-repositorios).
 - Criacao deste site de documentacao.

@@ -20,6 +20,12 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Diagnostico',
+      collapsed: false,
+      items: ['diagnostico/diagnostico', 'diagnostico/backlog-tecnico'],
+    },
+    {
+      type: 'category',
       label: 'Planejamento',
       items: [
         'planejamento/planejamento',

@@ -1,0 +1,271 @@
+---
+id: diagnostico
+title: Diagnostico do ecossistema
+sidebar_position: 1
+---
+
+# Diagnostico do ecossistema
+
+Na **Sprint 1** a equipe fez um pente-fino tecnico nos repositorios do projeto,
+para saber em que estado o MeasureSoftGram chegou a este semestre antes de
+decidir o que construir.
+
+Foram analisados **sete repositorios** - Action, CLI, Core, Docs, Front, Parser e
+Service - avaliando arquitetura, integridade do modelo de qualidade, seguranca,
+cobertura de testes e integracao continua.
+
+<div className="row margin-bottom--md">
+  <div className="col col--3">
+    <div className="card padding--md">
+      <strong style={{fontSize: '2rem'}}>3</strong>
+      <div>versoes do Core em circulacao</div>
+    </div>
+  </div>
+  <div className="col col--3">
+    <div className="card padding--md">
+      <strong style={{fontSize: '2rem'}}>5</strong>
+      <div>achados de seguranca</div>
+    </div>
+  </div>
+  <div className="col col--3">
+    <div className="card padding--md">
+      <strong style={{fontSize: '2rem'}}>3</strong>
+      <div>repositorios congelados</div>
+    </div>
+  </div>
+  <div className="col col--3">
+    <div className="card padding--md">
+      <strong style={{fontSize: '2rem'}}>92%</strong>
+      <div>cobertura do Core</div>
+    </div>
+  </div>
+</div>
+
+:::info Documentos completos
+- [Diagnostico do ecossistema (PDF)](/docs/Diagnostico-MeasureSoftGram.pdf) - 17 paginas
+- [Backlog tecnico (PDF)](/docs/Backlog-Tecnico-MeasureSoftGram.pdf) - 41 itens
+
+O detalhamento item a item, com criterios de aceite, esta em
+[Backlog tecnico](/docs/diagnostico/backlog-tecnico).
+:::
+
+## Panorama do ecossistema
+
+O MeasureSoftGram nao e um programa unico: e um ecossistema de modulos
+independentes em repositorios separados. Hoje ele existe em **duas versoes
+paralelas que nao coincidem**.
+
+A analise cobriu os sete repositorios **centrais** da organizacao, sem prefixo de
+semestre. Ja a documentacao oficial, escrita em julho de 2026, lista **nove
+repositorios ativos** com prefixo `2026.1-`, incluindo dois modulos que nao
+existem no conjunto central: **AI** (servidor MCP) e **Plugin** (extensao VS Code).
+
+:::warning Achado estrutural
+A documentacao descreve um ecossistema de nove modulos hospedado nos
+repositorios de semestre, enquanto o trabalho de consolidacao de 2026.1 migra
+para repositorios centrais. **Os dois modelos coexistem sem que nenhum seja a
+fonte da verdade.**
+:::
+
+| Modulo | Responsabilidade | Stack | Presente |
+| --- | --- | --- | --- |
+| Core | Nucleo de calculo do modelo de qualidade | Python | Sim |
+| Parser | Normaliza dados de entrada para o Core | Python | Sim |
+| Service | Backend REST, orquestra calculo e persiste | Django | Sim |
+| Front | Interface web e dashboards | Next.js | Sim |
+| CLI | Ferramenta de linha de comando | Python | Sim |
+| Action | Integracao com pipelines de CI | TypeScript | Sim |
+| AI | Servidor MCP para assistentes de IA | Python | **Ausente** |
+| Plugin | Extensao para editor VS Code | TypeScript | **Ausente** |
+
+## Ritmo de desenvolvimento
+
+Tres repositorios estao vivos, tres congelados e um e novo. Ha um **hiato de
+dezessete meses** - de setembro de 2024 a marco de 2026 - comum a todos.
+
+| Repositorio | Ultimo commit | Commits | Situacao |
+| --- | --- | --- | --- |
+| Parser | 24/08/2026 | 186 | Ativo - 28 commits em 2026 |
+| Service | 24/08/2026 | 858 | Ativo - modernizacao pesada |
+| CLI | 24/08/2026 | 849 | Sincronizado - 1 commit real |
+| Docs | 11/07/2026 | 21 | Novo - criado em jun/2026 |
+| Core | 20/03/2026 | 533 | Congelado desde set/2024 |
+| Front | 20/03/2026 | 1227 | Congelado desde set/2024 |
+| Action | 20/09/2024 | 338 | Congelado ha ~2 anos |
+
+### Perda de historico nos merges
+
+Os commits "Sincronizacao de repositorio - 2026.1" sao *squashes* de grande
+porte: um unico commit traz 2.065 linhas alteradas em 45 arquivos no CLI. Todo o
+trabalho de um semestre - autoria individual, motivacao de cada mudanca,
+possibilidade de bisseccao - colapsa em um commit so.
+
+## Integridade do modelo de qualidade
+
+Este e o achado mais grave. **O motor de calculo publicado nao corresponde ao
+codigo versionado**, e os dois modos de uso produzem notas diferentes para o
+mesmo software.
+
+O repositorio Core declara a versao **1.5.3**. No PyPI existe **msgram-core
+1.5.4**, publicado a partir de codigo que nao esta no repositorio. A comparacao
+dos dois pacotes revela correcoes semanticas reais:
+
+```python
+# aggregated_normalized_measures.py - medida ci_feedback_time
+-    gain_interpretation=1,
++    gain_interpretation=-1,      # sentido da metrica invertido
+-    max_threshold: float = 0.33,
++    max_threshold: float = 0.66,  # limiar dobrado
++    if int(total_builds) == 0:
++        return NO_BUILDS_NEUTRAL_SCORE
+
+# util/run_time_data_operations.py - bug de matriz nao-quadrada
+-    return abs(sum / (size * size))
++    return abs(sum / (size_1 * size_2))
+```
+
+:::danger Consequencia
+A nota de qualidade calculada hoje **nao e reproduzivel** a partir do codigo
+versionado. O modelo de qualidade, que e o produto do projeto, deixou de ser
+auditavel.
+:::
+
+### Tres versoes do Core em circulacao
+
+| Onde | Versao | Papel |
+| --- | --- | --- |
+| Service (producao) | 1.4.9 | Fluxo hospedado: dashboards e historico |
+| CLI (instalacao limpa) | 1.5.4 | Fluxo offline: calculo local via terminal |
+| Repositorio Core | 1.5.3 | A suposta fonte da verdade |
+
+A documentacao afirma que os dois modos "compartilham o mesmo motor de calculo".
+Na pratica, o Service esta duas versoes atras do CLI, e **nenhum dos dois roda o
+codigo versionado**.
+
+## Saude das suites de teste
+
+| Repositorio | Resultado | Cobertura | Observacao |
+| --- | --- | --- | --- |
+| Core | Passa | 92% | Requer `PYTHONPATH=src` |
+| Parser | **2 falhas** | 90% | Regressao de 24/08/2026 |
+| CLI | 127 testes | 89% | Somente com Core 1.5.3 |
+| Service | Nao executado | - | 274 testes; exige Postgres |
+| Front | Nao executado | - | 72 arquivos de teste |
+| Action | Nao executado | - | 7 arquivos de teste |
+
+O `flake8` retorna **zero ocorrencias** nos quatro repositorios Python: o codigo
+esta limpo em termos de convencao.
+
+:::danger O Parser esta quebrado no branch de desenvolvimento
+Uma renomeacao incompleta derrubou dois testes no `develop`, e a alteracao foi
+integrada por pull request no mesmo dia. **O resultado da integracao continua nao
+esta sendo verificado antes do merge** - o que e particularmente notavel num
+projeto cujo produto e medir qualidade de software.
+:::
+
+## Seguranca
+
+Cinco achados no Service, um deles com exposicao direta de dados pessoais em
+endpoint publico.
+
+| Achado | Gravidade |
+| --- | --- |
+| `GET /users/` expoe e-mail de todos os usuarios sem autenticacao | Critico |
+| Django 4.0.6 - sem suporte desde abril de 2023 | Critico |
+| Token OAuth do GitHub armazenado em texto plano | Atencao |
+| Producao sem TLS, com endurecimento desativado por padrao | Atencao |
+| CORS e CSRF apontando para infraestrutura desativada | Atencao |
+
+O caso mais serio: o Django REST Framework nao define
+`DEFAULT_PERMISSION_CLASSES`, e o padrao nesse caso e `AllowAny`. Todo viewset
+sem permissao explicita fica aberto - incluindo a listagem completa de usuarios
+com seus e-mails.
+
+## Integracao e entrega continuas
+
+A infraestrutura opera em duas velocidades muito distintas.
+
+**Service - o padrao de referencia.** A modernizacao de 2026.1 e trabalho de
+qualidade profissional: dependencias com `uv` e lockfile, actions fixadas por
+SHA, Postgres 18 nos testes, Docker multi-estagio, deploy resiliente,
+*healthcheck*, proxy reverso nginx e quatro dashboards Grafana provisionados.
+
+**Os demais - parados em 2024.** Actions descontinuadas (`checkout@v3`,
+`setup-node@v3`, `setup-python@v4`), action do SonarCloud arquivada e fixada em
+`@master`, e chaves do Sonar divergindo em tres padroes diferentes.
+
+:::warning Nenhum portao de qualidade e bloqueante
+Os quatro arquivos `codecov.yml` marcam `informational: true`, e o `.coveragerc`
+do Service nao define `fail_under`. Na pratica, **a cobertura de testes nunca
+reprova um pull request** - num projeto cuja finalidade e justamente medir
+qualidade de software.
+:::
+
+## Divida tecnica acumulada
+
+**Front - a maior superficie, a mais desatualizada.** São 18.936 linhas de
+TypeScript sobre uma base cujas dependencias pararam em 2022: Next.js 12.2.2
+(fora de suporte), `axios@0.27.2` e Node 18 no CI, tambem em fim de vida.
+
+:::warning Divergencia nao explicada
+O deploy do Service roteia um conteiner `front:3000` e registra que "o Front tem
+o seu proprio deploy". Existe, portanto, **um frontend em producao que nao
+corresponde a este codigo**.
+:::
+
+**Action - parada ha dois anos.** O manifesto declara `using: 'node16'`, runtime
+ja removido pelo GitHub, e o diretorio `dist/` versionado foi gerado pela ultima
+vez em setembro de 2024.
+
+Em contrapartida, os marcadores de divida no codigo sao poucos: apenas **14
+ocorrencias** de `TODO`, `FIXME` ou `HACK` em cerca de 32 mil linhas de Python.
+
+## Pontos fortes
+
+Vale registrar o que esta solido, porque nao e pouco.
+
+| Ponto | Detalhe |
+| --- | --- |
+| **O nucleo matematico esta bem testado** | O Core alcanca 92% de cobertura, com suite que passa integralmente. O coracao do modelo de qualidade - a parte mais dificil de reescrever - e a mais bem cuidada. |
+| **A modernizacao do Service e profissional** | Settings divididos com docstrings que explicam cada decisao, actions fixadas por SHA, Grafana provisionado. E o padrao a replicar. |
+| **A documentacao nova e o melhor artefato do ciclo** | Site Docusaurus com 24 paginas segundo o framework Diataxis, glossario, FAQ, diagramas Mermaid e busca local. |
+| **Disciplina de estilo mantida** | Zero ocorrencias de flake8 em 100% do codigo Python. |
+
+## Plano de acao priorizado
+
+### Bloqueante - correcao imediata (dias)
+
+1. **Corrigir a fixture do Parser.** Duas *strings*; o branch `develop` esta vermelho.
+2. **Fechar o endpoint `GET /users/`.** Adicionar `DEFAULT_PERMISSION_CLASSES`.
+3. **Estabilizar a dependencia do CLI.** Decisao de produto, nao de infraestrutura.
+
+### Critico - integridade e seguranca (semanas)
+
+4. **Recuperar o codigo do msgram-core 1.5.4** e versiona-lo no Core.
+5. **Alinhar a versao do Core** nos tres consumidores.
+6. **Atualizar o Django** para 4.2 LTS e cifrar o `github_access_token`.
+7. **Habilitar TLS na borda** e ativar as flags de `production.py`.
+
+### Estrutural - governanca do ecossistema (semestre)
+
+8. **Decidir entre repositorios centrais ou de semestre.**
+9. **Replicar o padrao de CI do Service** nos outros seis repositorios.
+10. **Tornar bloqueante ao menos o portao de `patch`** do Codecov.
+11. **Atualizar ou aposentar Front e Action explicitamente.**
+
+## Metodo e limitacoes
+
+O diagnostico distingue o que foi **verificado por execucao** do que resulta de
+leitura de codigo e configuracao.
+
+| Verificado por execucao | Nao verificado |
+| --- | --- |
+| Suites de teste de Core, Parser e CLI | Suite do Service - exige Postgres |
+| flake8 nos quatro repositorios Python | Suites de Front e Action |
+| Comparacao dos pacotes 1.5.3 e 1.5.4 do PyPI | Estado real da CI no GitHub |
+| Historico Git completo dos sete repositorios | Repositorios AI e Plugin - ausentes |
+| Rotas e permissoes do Service por inspecao | Ambiente de producao em execucao |
+
+---
+
+*Diagnostico tecnico - MeasureSoftGram - Ciclo 2026.1 - UnB/FGA, 25 de agosto de 2026.*
