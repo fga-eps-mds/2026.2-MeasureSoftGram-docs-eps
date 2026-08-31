@@ -1,0 +1,45 @@
+---
+id: arquitetura
+title: Arquitetura
+sidebar_position: 2
+---
+
+# Arquitetura
+
+## Visao geral
+
+> Descreva em alto nivel como os componentes se relacionam. O diagrama abaixo e
+> um ponto de partida - ajuste conforme a arquitetura real do sistema.
+
+```mermaid
+flowchart LR
+  Repo[Repositorio de codigo] --> Action[MeasureSoftGram-Action]
+  Action --> Parser[Parser]
+  Parser --> Core[Core]
+  Core --> Service[Service / API]
+  Service --> Front[Front-end]
+  CLI[CLI] --> Service
+```
+
+## Componentes
+
+| Componente | Responsabilidade | Tecnologia |
+| --- | --- | --- |
+| Core | Calculo do modelo de qualidade | Python |
+| Parser | Normalizacao de metricas de entrada | Python |
+| Service | API e persistencia | Python / Django |
+| Front | Interface web | TypeScript / React |
+| CLI | Interface de linha de comando | Python |
+| Action | Integracao com GitHub Actions | - |
+
+## Decisoes arquiteturais
+
+> Registre aqui as decisoes tomadas pela equipe, com contexto e alternativas
+> consideradas. Uma entrada por decisao.
+
+### ADR 001 - Titulo da decisao
+
+- **Contexto:**
+- **Decisao:**
+- **Alternativas consideradas:**
+- **Consequencias:**

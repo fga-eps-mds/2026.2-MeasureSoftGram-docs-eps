@@ -1,0 +1,50 @@
+---
+id: politicas
+title: Politicas de trabalho
+sidebar_position: 2
+---
+
+# Politicas de trabalho
+
+## Politica de branches
+
+| Branch | Proposito | Origem | Destino |
+| --- | --- | --- | --- |
+| `main` | Codigo estavel, publicado | - | - |
+| `devel` | Integracao do trabalho da sprint | `main` | `main` |
+| `feat/<nome>` | Nova funcionalidade | `devel` | `devel` |
+| `fix/<nome>` | Correcao de defeito | `devel` | `devel` |
+| `docs/<nome>` | Alteracao de documentacao | `devel` | `devel` |
+
+Nomes de branch em minusculas, palavras separadas por hifen.
+
+## Politica de commits
+
+A equipe adota [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<tipo>(<escopo opcional>): <descricao no imperativo>
+```
+
+| Tipo | Uso |
+| --- | --- |
+| `feat` | Nova funcionalidade |
+| `fix` | Correcao de defeito |
+| `docs` | Somente documentacao |
+| `test` | Adicao ou ajuste de testes |
+| `refactor` | Mudanca sem alterar comportamento |
+| `chore` | Tarefas de manutencao e build |
+
+Commits com mais de um autor devem usar `Co-authored-by:`.
+
+## Politica de code review
+
+- Todo Pull Request precisa de aprovacao de ao menos um outro integrante.
+- O PR deve descrever o que muda e como testar.
+- O autor nao faz merge do proprio PR sem aprovacao.
+- A CI precisa estar verde antes do merge.
+
+## Codigo de conduta
+
+A equipe segue o codigo de conduta da organizacao fga-eps-mds. Comportamentos
+que violem o codigo devem ser comunicados aos monitores da disciplina.
