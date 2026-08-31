@@ -34,6 +34,11 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Reunioes',
+      items: ['reunioes/reunioes'],
+    },
+    {
+      type: 'category',
       label: 'Metricas',
       items: ['metricas/metricas'],
     },
