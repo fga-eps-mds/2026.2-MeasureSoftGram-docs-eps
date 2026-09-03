@@ -41,7 +41,11 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Reuniões',
-      items: ['reunioes/reunioes'],
+      items: [
+        'reunioes/reunioes',
+        'reunioes/pauta-po-02-09',
+        'reunioes/ata-po-02-09',
+      ],
     },
     {
       type: 'category',
