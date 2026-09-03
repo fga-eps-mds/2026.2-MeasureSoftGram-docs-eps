@@ -1,24 +1,24 @@
 ---
 id: politicas
-title: Politicas de trabalho
+title: Políticas de trabalho
 sidebar_position: 2
 ---
 
-# Politicas de trabalho
+# Políticas de trabalho
 
-## Politica de branches
+## Política de branches
 
-| Branch | Proposito | Origem | Destino |
+| Branch | Propósito | Origem | Destino |
 | --- | --- | --- | --- |
-| `main` | Codigo estavel, publicado | - | - |
-| `devel` | Integracao do trabalho da sprint | `main` | `main` |
+| `main` | Código estável, publicado | - | - |
+| `devel` | Integração do trabalho da sprint | `main` | `main` |
 | `feat/<nome>` | Nova funcionalidade | `devel` | `devel` |
-| `fix/<nome>` | Correcao de defeito | `devel` | `devel` |
-| `docs/<nome>` | Alteracao de documentacao | `devel` | `devel` |
+| `fix/<nome>` | Correção de defeito | `devel` | `devel` |
+| `docs/<nome>` | Alteração de documentação | `devel` | `devel` |
 
-Nomes de branch em minusculas, palavras separadas por hifen.
+Nomes de branch em minúsculas, palavras separadas por hífen.
 
-## Politica de commits
+## Política de commits
 
 A equipe adota [Conventional Commits](https://www.conventionalcommits.org/):
 
@@ -29,22 +29,22 @@ A equipe adota [Conventional Commits](https://www.conventionalcommits.org/):
 | Tipo | Uso |
 | --- | --- |
 | `feat` | Nova funcionalidade |
-| `fix` | Correcao de defeito |
-| `docs` | Somente documentacao |
-| `test` | Adicao ou ajuste de testes |
-| `refactor` | Mudanca sem alterar comportamento |
-| `chore` | Tarefas de manutencao e build |
+| `fix` | Correção de defeito |
+| `docs` | Somente documentação |
+| `test` | Adição ou ajuste de testes |
+| `refactor` | Mudança sem alterar comportamento |
+| `chore` | Tarefas de manutenção e build |
 
 Commits com mais de um autor devem usar `Co-authored-by:`.
 
-## Politica de code review
+## Política de code review
 
-- Todo Pull Request precisa de aprovacao de ao menos um outro integrante.
+- Todo Pull Request precisa de aprovação de ao menos um outro integrante.
 - O PR deve descrever o que muda e como testar.
-- O autor nao faz merge do proprio PR sem aprovacao.
+- O autor não faz merge do próprio PR sem aprovação.
 - A CI precisa estar verde antes do merge.
 
-## Codigo de conduta
+## Código de conduta
 
-A equipe segue o codigo de conduta da organizacao fga-eps-mds. Comportamentos
-que violem o codigo devem ser comunicados aos monitores da disciplina.
+A equipe segue o código de conduta da organização fga-eps-mds. Comportamentos
+que violem o código devem ser comunicados aos monitores da disciplina.

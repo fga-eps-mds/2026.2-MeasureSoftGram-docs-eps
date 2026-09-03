@@ -1,7 +1,7 @@
 /**
  * Tema do MeasureSoftGram - identidade visual (IDV) oficial.
  * Base: Infima (bundled no template classic). Aqui sobrescrevemos as
- * variaveis pra alinhar cor, tipografia e estados semanticos ao guia de IDV
+ * variáveis pra alinhar cor, tipografia e estados semânticos ao guia de IDV
  * (docs/idv/guia-idv.pdf no repo 2026.1-MeasureSoftGram-DOC).
  *
  * Paleta canonica:
@@ -22,7 +22,7 @@
   --ifm-color-primary-lighter: #2f557a;
   --ifm-color-primary-lightest: #325a82;
 
-  /* Estados semanticos da IDV (admonitions, alerts, badges). */
+  /* Estados semânticos da IDV (admonitions, alerts, badges). */
   --ifm-color-danger: #d13310;
   --ifm-color-success: #04724d;
   --ifm-color-warning: #df8e16;

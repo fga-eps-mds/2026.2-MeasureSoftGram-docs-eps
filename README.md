@@ -1,25 +1,25 @@
 # 2026.2-MeasureSoftGram-docs-eps
 
-Documentacao da equipe de **Engenharia de Produto de Software (EPS)** do semestre
+Documentação da equipe de **Engenharia de Produto de Software (EPS)** do semestre
 2026.2 no projeto **MeasureSoftGram**.
 
-O site e publicado via GitHub Pages em:
+O site é publicado via GitHub Pages em:
 https://fga-eps-mds.github.io/2026.2-MeasureSoftGram-docs-eps/
 
-> A documentacao **do produto** (como usar, referencia da CLI, componentes) fica
-> em repositorio proprio:
+> A documentação **do produto** (como usar, referência da CLI, componentes) fica
+> em repositório próprio:
 > [MeasureSoftGram-Docs](https://github.com/fga-eps-mds/MeasureSoftGram-Docs).
 
 ## Estrutura
 
 ```
 docs/
-  intro.mdx              Pagina inicial da documentacao
-  produto/               Visao do produto, arquitetura, repositorios
+  intro.mdx              Página inicial da documentação
+  produto/               Visão do produto, arquitetura, repositórios
   planejamento/          Metodologia, roadmap, riscos
   sprints/               Registro de cada sprint
-  metricas/              Metricas de processo e de produto
-  equipe/                Integrantes, politicas de trabalho, links e acessos
+  metricas/              Métricas de processo e de produto
+  equipe/                Integrantes, políticas de trabalho, links e acessos
 ```
 
 ## Rodando localmente
@@ -31,31 +31,31 @@ npm install
 npm start
 ```
 
-O site fica disponivel em http://localhost:3000.
+O site fica disponível em http://localhost:3000.
 
 ## Build
 
 ```bash
-npm run build    # gera o site estatico em build/
+npm run build    # gera o site estático em build/
 npm run serve    # serve o build localmente
 ```
 
-## Publicacao
+## Publicação
 
 Todo push na branch `main` dispara o workflow
 [`deploy.yml`](.github/workflows/deploy.yml), que faz o build e publica no
-GitHub Pages. Nao e necessario rodar deploy manualmente.
+GitHub Pages. Não é necessário rodar deploy manualmente.
 
 ## Como contribuir
 
 1. Crie uma branch a partir de `main` (`docs/<assunto>`).
 2. Edite os arquivos `.mdx` em `docs/`.
-3. Rode `npm run build` para garantir que nao ha links quebrados.
+3. Rode `npm run build` para garantir que não há links quebrados.
 4. Abra um Pull Request.
 
-Cada pagina publicada tem um link **Edit this page** no rodape que leva direto ao
+Cada página publicada tem um link **Edit this page** no rodapé que leva direto ao
 arquivo correspondente no GitHub.
 
-## Licenca
+## Licença
 
 AGPL-3.0 - veja [LICENSE](LICENSE).

@@ -1,21 +1,21 @@
 ---
 id: backlog-tecnico
-title: Backlog tecnico
+title: Backlog técnico
 sidebar_position: 2
 ---
 
-# Backlog tecnico
+# Backlog técnico
 
-Levantamento de gargalos, defeitos ativos e divida tecnica nos sete
-repositorios, derivado do [diagnostico do ecossistema](/docs/diagnostico).
-Cada item esta redigido **para virar issue**: tem escopo fechado, caminho do
-arquivo e criterio de aceite.
+Levantamento de gargalos, defeitos ativos e dívida técnica nos sete
+repositórios, derivado do [diagnóstico do ecossistema](/docs/diagnostico).
+Cada item está redigido **para virar issue**: tem escopo fechado, caminho do
+arquivo e critério de aceite.
 
 <div className="row margin-bottom--md">
   <div className="col col--3">
     <div className="card padding--md">
       <strong style={{fontSize: '2rem'}}>6</strong>
-      <div>criticos</div>
+      <div>críticos</div>
     </div>
   </div>
   <div className="col col--3">
@@ -38,88 +38,88 @@ arquivo e criterio de aceite.
   </div>
 </div>
 
-**41 itens no total**, dos quais **3 estao quebrados agora**.
+**41 itens no total**, dos quais **3 estão quebrados agora**.
 
 :::info Documento completo
-[Backlog tecnico (PDF)](/docs/Backlog-Tecnico-MeasureSoftGram.pdf) - com o
-detalhamento integral de cada item, trechos de codigo e criterios de aceite.
+[Backlog técnico (PDF)](/docs/Backlog-Tecnico-MeasureSoftGram.pdf) - com o
+detalhamento integral de cada item, trechos de código e critérios de aceite.
 :::
 
 ## E1 - Quebrado agora
 
-Tres itens que ja falham hoje. Antes de qualquer feature nova, isto precisa estar
-verde - todo o resto do backlog e construido em cima de um CI confiavel.
+Três itens que já falham hoje. Antes de qualquer feature nova, isto precisa estar
+verde - todo o resto do backlog e construído em cima de um CI confiável.
 
 | ID | Item | Repo | Gravidade | Esforco |
 | --- | --- | --- | --- | --- |
-| MSG-01 | Fixture desatualizada derruba dois testes no `develop` do Parser | Parser | Critico | 15 min |
-| MSG-02 | Restricao frouxa de dependencia quebra o CLI em instalacao limpa | CLI | Critico | 1 h |
-| MSG-03 | `GET /users/` expoe e-mail de todos os usuarios sem autenticacao | Service | Critico | 2 h |
+| MSG-01 | Fixture desatualizada derruba dois testes no `develop` do Parser | Parser | Crítico | 15 min |
+| MSG-02 | Restrição frouxa de dependência quebra o CLI em instalação limpa | CLI | Crítico | 1 h |
+| MSG-03 | `GET /users/` expõe e-mail de todos os usuários sem autenticação | Service | Crítico | 2 h |
 
 ### MSG-01 - Fixture desatualizada no Parser
 
 O commit `f9bc01c` (24/08/2026) removeu o prefixo de semestre dos mocks, mas
-**nao atualizou a fixture**. As linhas 16 e 34 de `expected_return_values.py`
+**não atualizou a fixture**. As linhas 16 e 34 de `expected_return_values.py`
 ainda carregam o nome antigo.
 
-O sintoma de fundo e mais grave que o defeito: **o resultado do CI nao esta sendo
+O sintoma de fundo é mais grave que o defeito: **o resultado do CI não está sendo
 verificado antes do merge**.
 
-> **Criterio de aceite:** `pytest` passa integralmente no `develop`, e o branch
+> **Critério de aceite:** `pytest` passa integralmente no `develop`, e o branch
 > fica protegido exigindo CI verde para merge.
 
-### MSG-02 - Dependencia frouxa no CLI
+### MSG-02 - Dependência frouxa no CLI
 
-O CLI declara `msgram-core~=1.5.3`, que resolve para 1.5.4. Nessa versao, tres
-testes falham. Verificado por execucao: fixando `msgram-core==1.5.3`, os **127
-testes unitarios passam**.
+O CLI declara `msgram-core~=1.5.3`, que resolve para 1.5.4. Nessa versão, três
+testes falham. Verificado por execução: fixando `msgram-core==1.5.3`, os **127
+testes unitários passam**.
 
-> **Criterio de aceite:** versao do Core fixada com `==` e suite verde em
-> ambiente limpo. Depende da decisao tomada em MSG-05.
+> **Critério de aceite:** versão do Core fixada com `==` e suíte verde em
+> ambiente limpo. Depende da decisão tomada em MSG-05.
 
-### MSG-03 - Endpoint publico expondo dados pessoais
+### MSG-03 - Endpoint público expondo dados pessoais
 
-`REST_FRAMEWORK` define `DEFAULT_AUTHENTICATION_CLASSES` mas **nao define
-`DEFAULT_PERMISSION_CLASSES`**. O padrao do DRF nesse caso e `AllowAny`.
+`REST_FRAMEWORK` define `DEFAULT_AUTHENTICATION_CLASSES` mas **não define
+`DEFAULT_PERMISSION_CLASSES`**. O padrão do DRF nesse caso e `AllowAny`.
 
 `UserListViewSet`, roteado em `GET /users/`, serializa `id`, `username`,
 `first_name`, `last_name` e **`email` de todos os cadastrados**.
 
-> **Criterio de aceite:** `DEFAULT_PERMISSION_CLASSES = (IsAuthenticated,)`
+> **Critério de aceite:** `DEFAULT_PERMISSION_CLASSES = (IsAuthenticated,)`
 > configurado; endpoints de badge marcados explicitamente com `AllowAny`; teste
 > automatizado garantindo `401` em `GET /users/` sem token.
 
 ## E2 - Integridade do modelo de qualidade
 
-O problema mais grave do projeto. O motor de calculo publicado nao corresponde ao
-codigo versionado.
+O problema mais grave do projeto. O motor de cálculo publicado não corresponde ao
+código versionado.
 
 | ID | Item | Repo | Gravidade | Esforco |
 | --- | --- | --- | --- | --- |
-| MSG-04 | Codigo do `msgram-core 1.5.4` publicado no PyPI nao esta versionado | Core | Critico | 1 dia |
-| MSG-05 | Tres versoes do Core em circulacao simultanea | Transversal | Critico | 3 dias |
-| MSG-06 | Testes do CLI codificam a semantica antiga de `ci_feedback_time` | CLI | Alto | 3 h |
+| MSG-04 | Código do `msgram-core 1.5.4` publicado no PyPI não está versionado | Core | Crítico | 1 dia |
+| MSG-05 | Três versões do Core em circulação simultanea | Transversal | Crítico | 3 dias |
+| MSG-06 | Testes do CLI codificam a semântica antiga de `ci_feedback_time` | CLI | Alto | 3 h |
 | MSG-07 | Sem teste de contrato entre Core, Service e CLI | Transversal | Alto | 1 semana |
 
-MSG-04, MSG-05 e MSG-06 sao sintomas da mesma lacuna apontada em **MSG-07**: nao
-existe verificacao de que os dois caminhos de calculo concordam.
+MSG-04, MSG-05 e MSG-06 são sintomas da mesma lacuna apontada em **MSG-07**: não
+existe verificação de que os dois caminhos de cálculo concordam.
 
-> **Criterio de aceite (MSG-07):** suite que roda o mesmo conjunto de metricas
-> pelo Service e pelo CLI e falha se as notas divergirem alem da tolerancia de
+> **Critério de aceite (MSG-07):** suíte que roda o mesmo conjunto de métricas
+> pelo Service e pelo CLI e falha se as notas divergirem além da tolerância de
 > ponto flutuante.
 
 ## E3 - Gargalos de performance
 
-O calculo do TSQMI e o caminho quente do sistema. Hoje faz uma consulta ao banco
-por item, em quatro niveis aninhados, sobre uma tabela sem indice.
+O cálculo do TSQMI é o caminho quente do sistema. Hoje faz uma consulta ao banco
+por item, em quatro níveis aninhados, sobre uma tabela sem índice.
 
 | ID | Item | Repo | Gravidade | Esforco |
 | --- | --- | --- | --- | --- |
-| MSG-08 | N+1 em cascata de quatro niveis no calculo do modelo | Service | Alto | 1 semana |
-| MSG-09 | `CollectedMetric` sem indice, com ordenacao global no Meta | Service | Alto | 4 h |
-| MSG-10 | `parser.py` grava JSON invalido em silencio quando o Sonar falha | Transversal | Medio | 2 h |
+| MSG-08 | N+1 em cascata de quatro níveis no cálculo do modelo | Service | Alto | 1 semana |
+| MSG-09 | `CollectedMetric` sem índice, com ordenação global no Meta | Service | Alto | 4 h |
+| MSG-10 | `parser.py` grava JSON inválido em silencio quando o Sonar falha | Transversal | Médio | 2 h |
 
-O proprio codigo ja reconhece o problema de MSG-08:
+O próprio código já reconhece o problema de MSG-08:
 
 ```python
 # src/measures/models.py:44
@@ -130,105 +130,105 @@ for supported_metric in self.metrics.all():
     value = supported_metric.get_latest_metric_value(repository)  # 1 query cada
 ```
 
-## E4 - Seguranca
+## E4 - Segurança
 
-Alem de MSG-03, cinco itens no Service e no Front. Dois sao risco presente; tres
-sao risco latente.
+Além de MSG-03, cinco itens no Service e no Front. Dois são risco presente; três
+são risco latente.
 
 | ID | Item | Repo | Gravidade | Esforco |
 | --- | --- | --- | --- | --- |
-| MSG-11 | Django 4.0.6 sem suporte desde abril de 2023 | Service | Critico | 1 semana |
+| MSG-11 | Django 4.0.6 sem suporte desde abril de 2023 | Service | Crítico | 1 semana |
 | MSG-12 | Token OAuth do GitHub armazenado em texto plano | Service | Alto | 1 dia |
-| MSG-13 | Producao sem TLS: tokens de autenticacao trafegam em claro | Service | Alto | 1 dia |
-| MSG-14 | `.gitignore` do Front nao cobre o diretorio `.envs/` | Front | Medio | 15 min |
-| MSG-15 | `debug_toolbar` em `INSTALLED_APPS` base e nas dependencias de producao | Service | Medio | 2 h |
-| MSG-16 | CORS e CSRF com padroes apontando para infraestrutura desativada | Service | Baixo | 1 h |
+| MSG-13 | Produção sem TLS: tokens de autenticação trafegam em claro | Service | Alto | 1 dia |
+| MSG-14 | `.gitignore` do Front não cobre o diretório `.envs/` | Front | Médio | 15 min |
+| MSG-15 | `debug_toolbar` em `INSTALLED_APPS` base e nas dependências de produção | Service | Médio | 2 h |
+| MSG-16 | CORS e CSRF com padrões apontando para infraestrutura desativada | Service | Baixo | 1 h |
 
-Em MSG-13, as flags de seguranca **ja estao prontas e parametrizadas por
-variavel de ambiente** - falta apenas o certificado na borda.
+Em MSG-13, as flags de segurança **já estão prontas e parametrizadas por
+variável de ambiente** - falta apenas o certificado na borda.
 
-## E5 - Integracao continua
+## E5 - Integração contínua
 
-O Service foi modernizado em 2026.1 e virou o padrao de referencia. Os outros
-seis repositorios ficaram em 2024, com ferramental descontinuado e nenhum portao
+O Service foi modernizado em 2026.1 e virou o padrão de referência. Os outros
+seis repositórios ficaram em 2024, com ferramental descontinuado e nenhum portão
 bloqueante.
 
 | ID | Item | Repo | Gravidade | Esforco |
 | --- | --- | --- | --- | --- |
-| MSG-17 | Nenhum portao de qualidade bloqueia merge | Transversal | Alto | 4 h |
-| MSG-18 | Action declara runtime `node16`, ja removido pelo GitHub | Action | Alto | 3 h |
-| MSG-19 | Workflow do Core referencia repositorio renomeado | Core | Alto | 30 min |
-| MSG-20 | Actions descontinuadas em cinco repositorios | Transversal | Medio | 1 dia |
-| MSG-21 | Action do SonarCloud arquivada e fixada em `@master` | Transversal | Medio | 4 h |
-| MSG-22 | Chaves do Sonar divergem em tres padroes diferentes | Transversal | Medio | 1 dia |
-| MSG-23 | Nenhum repositorio tem Dependabot ou Renovate | Transversal | Medio | 4 h |
-| MSG-24 | Parser removeu a analise estatica do CI | Parser | Medio | 2 h |
-| MSG-25 | Sem `CODEOWNERS` em nenhum repositorio | Transversal | Baixo | 2 h |
+| MSG-17 | Nenhum portão de qualidade bloqueia merge | Transversal | Alto | 4 h |
+| MSG-18 | Action declara runtime `node16`, já removido pelo GitHub | Action | Alto | 3 h |
+| MSG-19 | Workflow do Core referência repositório renomeado | Core | Alto | 30 min |
+| MSG-20 | Actions descontinuadas em cinco repositórios | Transversal | Médio | 1 dia |
+| MSG-21 | Action do SonarCloud arquivada e fixada em `@master` | Transversal | Médio | 4 h |
+| MSG-22 | Chaves do Sonar divergem em três padrões diferentes | Transversal | Médio | 1 dia |
+| MSG-23 | Nenhum repositório tem Dependabot ou Renovate | Transversal | Médio | 4 h |
+| MSG-24 | Parser removeu a análise estática do CI | Parser | Médio | 2 h |
+| MSG-25 | Sem `CODEOWNERS` em nenhum repositório | Transversal | Baixo | 2 h |
 | MSG-26 | Action sem templates de issue e sem `CONTRIBUTING` | Action | Baixo | 2 h |
 
-MSG-23 e a **razao estrutural** pela qual MSG-11, MSG-18, MSG-20 e MSG-21
-puderam envelhecer ate virarem trabalho de semanas: sem automacao, atualizar
-dependencia depende de alguem lembrar.
+MSG-23 é a **razão estrutural** pela qual MSG-11, MSG-18, MSG-20 e MSG-21
+puderam envelhecer até virarem trabalho de semanas: sem automação, atualizar
+dependência depende de alguém lembrar.
 
-MSG-25 merece atencao especial numa equipe que rotaciona a cada semestre: sem
-`CODEOWNERS`, o conhecimento de cada modulo se perde na virada.
+MSG-25 merece atenção especial numa equipe que rotaciona a cada semestre: sem
+`CODEOWNERS`, o conhecimento de cada módulo se perde na virada.
 
-## E6 - Duplicacao e reprodutibilidade
+## E6 - Duplicação e reprodutibilidade
 
 | ID | Item | Repo | Gravidade | Esforco |
 | --- | --- | --- | --- | --- |
-| MSG-27 | `parser.py` copiado em seis repositorios, em quatro variantes divergentes | Transversal | Alto | 3 dias |
-| MSG-28 | Front e Docs versionam `yarn.lock` e `package-lock.json` ao mesmo tempo | Front | Medio | 3 h |
-| MSG-29 | Dockerfile do Front constroi para producao e roda o servidor de desenvolvimento | Front | Medio | 1 dia |
-| MSG-30 | `dist/` versionado e defasado em quase dois anos | Action | Medio | 4 h |
-| MSG-31 | Dependencias de teste declaradas como dependencias de producao | Action | Baixo | 1 h |
+| MSG-27 | `parser.py` copiado em seis repositórios, em quatro variantes divergentes | Transversal | Alto | 3 dias |
+| MSG-28 | Front e Docs versionam `yarn.lock` e `package-lock.json` ao mesmo tempo | Front | Médio | 3 h |
+| MSG-29 | Dockerfile do Front constrói para produção e roda o servidor de desenvolvimento | Front | Médio | 1 dia |
+| MSG-30 | `dist/` versionado e defasado em quase dois anos | Action | Médio | 4 h |
+| MSG-31 | Dependências de teste declaradas como dependências de produção | Action | Baixo | 1 h |
 | MSG-32 | Arquivos gerados e de sistema versionados no Service | Service | Baixo | 30 min |
 
-Em MSG-27, a versao da Action coleta `test_success_density` e
-`reliability_rating`, que as outras nao coletam: **repositorios diferentes do
-mesmo projeto sao medidos com conjuntos de metricas diferentes**, comprometendo a
+Em MSG-27, a versão da Action coleta `test_success_density` e
+`reliability_rating`, que as outras não coletam: **repositórios diferentes do
+mesmo projeto são medidos com conjuntos de métricas diferentes**, comprometendo a
 comparabilidade entre eles.
 
-## E7 - Qualidade de codigo e testes
+## E7 - Qualidade de código e testes
 
-O Python do projeto esta limpo - zero apontamentos de flake8. A divida se
-concentra no Front, que e a maior superficie e a menos tocada.
+O Python do projeto está limpo - zero apontamentos de flake8. A divida se
+concentra no Front, que é a maior superfície e a menos tocada.
 
 | ID | Item | Repo | Gravidade | Esforco |
 | --- | --- | --- | --- | --- |
-| MSG-33 | Next.js 12.2.2 fora de suporte, com dependencias de 2022 | Front | Alto | 2 semanas |
-| MSG-34 | Um terco do codigo de testes do Front e snapshot | Front | Alto | 2 semanas |
-| MSG-35 | 96 usos de `any` e 58 supressoes de lint no Front | Front | Medio | 1 semana |
-| MSG-36 | Suite do Service exige Postgres e nao roda localmente sem Docker | Service | Medio | 1 dia |
+| MSG-33 | Next.js 12.2.2 fora de suporte, com dependências de 2022 | Front | Alto | 2 semanas |
+| MSG-34 | Um terço do código de testes do Front e snapshot | Front | Alto | 2 semanas |
+| MSG-35 | 96 usos de `any` e 58 supressões de lint no Front | Front | Médio | 1 semana |
+| MSG-36 | Suíte do Service exige Postgres e não roda localmente sem Docker | Service | Médio | 1 dia |
 | MSG-37 | `pytest.ini` do Core se contradiz | Core | Baixo | 1 h |
 | MSG-38 | Notebook de 63 KB versionado na raiz do Core | Core | Baixo | 2 h |
 
-Sobre MSG-34: teste de snapshot detecta que algo mudou, nao que algo *quebrou*.
-Na pratica, **a cobertura reportada e maior do que a protecao real** - e o que
-faz o numero do Front nao ser comparavel ao do Core.
+Sobre MSG-34: teste de snapshot detecta que algo mudou, não que algo *quebrou*.
+Na prática, **a cobertura reportada é maior do que a proteção real** - e o que
+faz o número do Front não ser comparável ao do Core.
 
 ## E8 - Governanca e identidade do projeto
 
-Itens que nao sao codigo, mas que produzem codigo ruim. E aqui que esta a causa
+Itens que não são código, mas que produzem código ruim. E aqui que está a causa
 de boa parte do backlog acima.
 
 | ID | Item | Repo | Gravidade | Esforco |
 | --- | --- | --- | --- | --- |
-| MSG-39 | Duas identidades concorrentes: repositorios centrais versus de semestre | Transversal | Alto | 1 semana |
-| MSG-40 | O Front em producao nao corresponde ao codigo versionado | Front | Alto | 3 dias |
-| MSG-41 | Squash de fim de semestre apaga a autoria do trabalho | Transversal | Medio | 1 semana |
+| MSG-39 | Duas identidades concorrentes: repositórios centrais versus de semestre | Transversal | Alto | 1 semana |
+| MSG-40 | O Front em produção não corresponde ao código versionado | Front | Alto | 3 dias |
+| MSG-41 | Squash de fim de semestre apaga a autoria do trabalho | Transversal | Médio | 1 semana |
 
-**MSG-39 e a causa-raiz** de MSG-22 (chaves do Sonar divergentes), de MSG-04
-(codigo publicado fora do repositorio central) e da confusao de qualquer pessoa
+**MSG-39 é a causa-raiz** de MSG-22 (chaves do Sonar divergentes), de MSG-04
+(código publicado fora do repositório central) e da confusão de qualquer pessoa
 que chegue ao projeto.
 
-> **Criterio de aceite (MSG-39):** decisao registrada em ADR sobre qual conjunto
-> e canonico, repositorios nao canonicos arquivados e documentacao alinhada.
+> **Critério de aceite (MSG-39):** decisão registrada em ADR sobre qual conjunto
+> é canônico, repositórios não canônicos arquivados e documentação alinhada.
 
-Em MSG-41, os branches divergiram a ponto de **nao haver um branch que represente
-o estado do projeto**: `main` tem 13 commits que nao estao em `develop` no CLI, e
-o `develop` do Front esta 1.000 commits a frente do `main`.
+Em MSG-41, os branches divergiram a ponto de **não haver um branch que represente
+o estado do projeto**: `main` tem 13 commits que não estão em `develop` no CLI, e
+o `develop` do Front está 1.000 commits a frente do `main`.
 
 ---
 
-*Backlog tecnico - MeasureSoftGram - 41 itens - UnB/FGA, 25 de agosto de 2026.*
+*Backlog técnico - MeasureSoftGram - 41 itens - UnB/FGA, 25 de agosto de 2026.*

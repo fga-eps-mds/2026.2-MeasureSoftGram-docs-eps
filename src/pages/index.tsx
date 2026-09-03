@@ -66,7 +66,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={siteConfig.title}
-      description="Documentacao da equipe de EPS 2026.2 no projeto MeasureSoftGram.">
+      description="Documentação da equipe de EPS 2026.2 no projeto MeasureSoftGram.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

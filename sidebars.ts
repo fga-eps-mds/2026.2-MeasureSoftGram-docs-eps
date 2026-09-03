@@ -1,9 +1,9 @@
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 
 /**
- * Sidebar unica da documentacao da disciplina, organizada pelas fases do
- * trabalho: o que e o produto, como a equipe se organiza, o que foi feito em
- * cada sprint e como o resultado e medido.
+ * Sidebar única da documentação da disciplina, organizada pelas fases do
+ * trabalho: o que é o produto, como a equipe se organiza, o que foi feito em
+ * cada sprint e como o resultado é medido.
  */
 const sidebars: SidebarsConfig = {
   docsSidebar: [
@@ -20,7 +20,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Diagnostico',
+      label: 'Diagnóstico',
       collapsed: false,
       items: ['diagnostico/diagnostico', 'diagnostico/backlog-tecnico'],
     },
@@ -40,12 +40,12 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Reunioes',
+      label: 'Reuniões',
       items: ['reunioes/reunioes'],
     },
     {
       type: 'category',
-      label: 'Metricas',
+      label: 'Métricas',
       items: ['metricas/metricas'],
     },
     {

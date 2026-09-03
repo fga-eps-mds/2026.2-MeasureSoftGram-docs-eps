@@ -6,14 +6,14 @@ sidebar_position: 2
 
 # Arquitetura
 
-## Visao geral
+## Visão geral
 
-> Descreva em alto nivel como os componentes se relacionam. O diagrama abaixo e
+> Descreva em alto nível como os componentes se relacionam. O diagrama abaixo é
 > um ponto de partida - ajuste conforme a arquitetura real do sistema.
 
 ```mermaid
 flowchart LR
-  Repo[Repositorio de codigo] --> Action[MeasureSoftGram-Action]
+  Repo[Repositório de código] --> Action[MeasureSoftGram-Action]
   Action --> Parser[Parser]
   Parser --> Core[Core]
   Core --> Service[Service / API]
@@ -25,21 +25,21 @@ flowchart LR
 
 | Componente | Responsabilidade | Tecnologia |
 | --- | --- | --- |
-| Core | Calculo do modelo de qualidade | Python |
-| Parser | Normalizacao de metricas de entrada | Python |
-| Service | API e persistencia | Python / Django |
+| Core | Cálculo do modelo de qualidade | Python |
+| Parser | Normalização de métricas de entrada | Python |
+| Service | API e persistência | Python / Django |
 | Front | Interface web | TypeScript / React |
 | CLI | Interface de linha de comando | Python |
-| Action | Integracao com GitHub Actions | - |
+| Action | Integração com GitHub Actions | - |
 
-## Decisoes arquiteturais
+## Decisões arquiteturais
 
-> Registre aqui as decisoes tomadas pela equipe, com contexto e alternativas
-> consideradas. Uma entrada por decisao.
+> Registre aqui as decisões tomadas pela equipe, com contexto e alternativas
+> consideradas. Uma entrada por decisão.
 
-### ADR 001 - Titulo da decisao
+### ADR 001 - Título da decisão
 
 - **Contexto:**
-- **Decisao:**
+- **Decisão:**
 - **Alternativas consideradas:**
-- **Consequencias:**
+- **Consequências:**

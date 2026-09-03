@@ -4,10 +4,10 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'MeasureSoftGram - EPS 2026.2',
-  tagline: 'Documentacao da equipe na disciplina de Engenharia de Produto de Software',
+  tagline: 'Documentação da equipe na disciplina de Engenharia de Produto de Software',
   favicon: 'img/favicon.png',
 
-  // Fontes da IDV: Roboto (texto/titulos) + Quattrocento (wordmark do logo).
+  // Fontes da IDV: Roboto (texto/títulos) + Quattrocento (wordmark do logo).
   stylesheets: [
     'https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&family=Roboto:wght@400;500;700&display=swap',
   ],
@@ -35,7 +35,7 @@ const config: Config = {
   themes: [
     '@docusaurus/theme-mermaid',
     [
-      // Busca full-text client-side, autocontida (sem servico externo).
+      // Busca full-text client-side, autocontida (sem serviço externo).
       require.resolve('@easyops-cn/docusaurus-search-local'),
       {
         hashed: true,
@@ -85,7 +85,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'docsSidebar',
           position: 'left',
-          label: 'Documentacao',
+          label: 'Documentação',
         },
         {
           href: 'https://github.com/fga-eps-mds/2026.2-MeasureSoftGram-docs-eps',
@@ -100,7 +100,7 @@ const config: Config = {
         {
           title: 'Projeto',
           items: [
-            {label: 'Visao do produto', to: '/docs/produto/visao-do-produto'},
+            {label: 'Visão do produto', to: '/docs/produto/visao-do-produto'},
             {label: 'Arquitetura', to: '/docs/produto/arquitetura'},
             {label: 'Equipe', to: '/docs/equipe'},
           ],
@@ -110,24 +110,24 @@ const config: Config = {
           items: [
             {label: 'Planejamento', to: '/docs/planejamento'},
             {label: 'Sprints', to: '/docs/sprints'},
-            {label: 'Metricas', to: '/docs/metricas'},
+            {label: 'Métricas', to: '/docs/metricas'},
           ],
         },
         {
           title: 'Links',
           items: [
             {
-              label: 'Organizacao no GitHub',
+              label: 'Organização no GitHub',
               href: 'https://github.com/fga-eps-mds',
             },
             {
-              label: 'Documentacao do produto',
+              label: 'Documentação do produto',
               href: 'https://fga-eps-mds.github.io/MeasureSoftGram-Docs/',
             },
           ],
         },
       ],
-      copyright: `MeasureSoftGram - EPS 2026.2 - fga-eps-mds. Construido com Docusaurus.`,
+      copyright: `MeasureSoftGram - EPS 2026.2 - fga-eps-mds. Construído com Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

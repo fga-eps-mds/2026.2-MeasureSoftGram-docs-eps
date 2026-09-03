@@ -18,7 +18,7 @@ const FeatureList: FeatureItem[] = [
     to: '/docs/produto/visao-do-produto',
     description: (
       <>
-        Visao do produto, arquitetura do sistema e os repositorios que compoem o
+        Visão do produto, arquitetura do sistema e os repositórios que compõem o
         MeasureSoftGram.
       </>
     ),
@@ -29,7 +29,7 @@ const FeatureList: FeatureItem[] = [
     to: '/docs/planejamento',
     description: (
       <>
-        Metodologia adotada pela equipe, roadmap do semestre, gestao de riscos e o
+        Metodologia adotada pela equipe, roadmap do semestre, gestão de riscos e o
         registro de cada sprint.
       </>
     ),
@@ -40,7 +40,7 @@ const FeatureList: FeatureItem[] = [
     to: '/docs/equipe',
     description: (
       <>
-        Integrantes e papeis, politicas de branch, commit e code review adotadas
+        Integrantes e papéis, políticas de branch, commit e code review adotadas
         no semestre.
       </>
     ),
