@@ -41,7 +41,7 @@ cobertura de testes e integração contínua.
   </div>
 </div>
 
-:::info Documentos completos
+:::info[Documentos completos]
 - [Diagnóstico do ecossistema (PDF)](/docs/Diagnostico-MeasureSoftGram.pdf) - 17 páginas
 - [Backlog técnico (PDF)](/docs/Backlog-Tecnico-MeasureSoftGram.pdf) - 41 itens
 
@@ -60,7 +60,7 @@ semestre. Já a documentação oficial, escrita em julho de 2026, lista **nove
 repositórios ativos** com prefixo `2026.1-`, incluindo dois módulos que não
 existem no conjunto central: **AI** (servidor MCP) e **Plugin** (extensão VS Code).
 
-:::warning Achado estrutural
+:::warning[Achado estrutural]
 A documentação descreve um ecossistema de nove módulos hospedado nos
 repositórios de semestre, enquanto o trabalho de consolidação de 2026.1 migra
 para repositórios centrais. **Os dois modelos coexistem sem que nenhum seja a
@@ -124,7 +124,7 @@ dos dois pacotes revela correções semânticas reais:
 +    return abs(sum / (size_1 * size_2))
 ```
 
-:::danger Consequência
+:::danger[Consequência]
 A nota de qualidade calculada hoje **não é reproduzível** a partir do código
 versionado. O modelo de qualidade, que é o produto do projeto, deixou de ser
 auditável.
@@ -156,7 +156,7 @@ código versionado**.
 O `flake8` retorna **zero ocorrências** nos quatro repositórios Python: o código
 está limpo em termos de convenção.
 
-:::danger O Parser está quebrado no branch de desenvolvimento
+:::danger[O Parser está quebrado no branch de desenvolvimento]
 Uma renomeação incompleta derrubou dois testes no `develop`, e a alteração foi
 integrada por pull request no mesmo dia. **O resultado da integração contínua não
 está sendo verificado antes do merge** - o que é particularmente notável num
@@ -194,7 +194,7 @@ SHA, Postgres 18 nos testes, Docker multi-estágio, deploy resiliente,
 `setup-node@v3`, `setup-python@v4`), action do SonarCloud arquivada e fixada em
 `@master`, e chaves do Sonar divergindo em três padrões diferentes.
 
-:::warning Nenhum portão de qualidade e bloqueante
+:::warning[Nenhum portão de qualidade e bloqueante]
 Os quatro arquivos `codecov.yml` marcam `informational: true`, e o `.coveragerc`
 do Service não define `fail_under`. Na prática, **a cobertura de testes nunca
 reprova um pull request** - num projeto cuja finalidade é justamente medir
@@ -207,7 +207,7 @@ qualidade de software.
 TypeScript sobre uma base cujas dependências pararam em 2022: Next.js 12.2.2
 (fora de suporte), `axios@0.27.2` e Node 18 no CI, também em fim de vida.
 
-:::warning Divergência não explicada
+:::warning[Divergência não explicada]
 O deploy do Service roteia um conteiner `front:3000` e registra que "o Front tem
 o seu próprio deploy". Existe, portanto, **um frontend em produção que não
 corresponde a este código**.
